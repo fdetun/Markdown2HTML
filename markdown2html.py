@@ -11,5 +11,5 @@ else :
         f = open(sys.argv[1], "r")
         exit(0)
     except FileNotFoundError:
-        print("Missing <filename>", file=sys.stderr)
+        print('Missing {}'.format(sys.argv[1]), file=sys.stderr)
         exit(1)
