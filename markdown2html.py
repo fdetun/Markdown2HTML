@@ -7,7 +7,7 @@ import os
 def writer(code, file):
     """writer function"""
     f = open(file, "a+")
-    f.write(str(code) + '\n')
+    f.write(code)
 
 
 def representation(strzero):
@@ -33,10 +33,13 @@ if __name__ == "__main__":
             except BaseException:
                 pass
             data = f.split('\n')
-            for i in data:
+            for k, i in enumerate(data):
                 count = i.count("#")
                 codeline = representation(i)
-                writer(codeline, sys.argv[2])
+                if k == len(data) - 1:
+                    writer(codeline, sys.argv[2])
+                else:
+                    writer(codeline + '\n', sys.argv[2])
         except FileNotFoundError:
             print('Missing {}'.format(sys.argv[1]), file=sys.stderr)
             exit(1)
