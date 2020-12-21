@@ -34,12 +34,13 @@ if __name__ == "__main__":
                 pass
             data = f.split('\n')
             for k, i in enumerate(data):
-                count = i.count("#")
-                codeline = representation(i)
-                if k == len(data) - 1:
-                    writer(codeline, sys.argv[2])
-                else:
-                    writer(codeline + '\n', sys.argv[2])
+                if "#" in i:
+                    count = i.count("#")
+                    codeline = representation(i)
+                    if k == len(data) - 1:
+                        writer(codeline, sys.argv[2])
+                    else:
+                        writer(codeline + '\n', sys.argv[2])
         except FileNotFoundError:
             print('Missing {}'.format(sys.argv[1]), file=sys.stderr)
             exit(1)
