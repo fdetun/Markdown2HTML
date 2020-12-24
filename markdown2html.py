@@ -13,7 +13,7 @@ def writer(code, file):
 def representation(strzero, tag):
     """repr function"""
     ul = "<ul>"
-    if type(strzero) == list:
+    if tag == '-':
         for i in strzero:
             a = i.split(" ")
             a = a[1:]
@@ -31,12 +31,16 @@ def representation(strzero, tag):
 
 if __name__ == "__main__":
     """markdown2html"""
-
+    respr = ""
+    writingaray = []
+    myarr = []
+    y = {}
     arrul = []
     if len(sys.argv) != 3:
         print('Usage: ./markdown2html.py README.md README.html', file=sys.stderr)
         exit(1)
     else:
+        i = 0
         try:
             with open(sys.argv[1], "r") as file:
                 f = str(file.read())
@@ -45,18 +49,22 @@ if __name__ == "__main__":
             except BaseException:
                 pass
             data = f.split('\n')
-            for k, i in enumerate(data):
-                if "#" in i:
-                    codeline = representation(i, "#")
-                    if k == len(data) - 1:
-                        writer(codeline, sys.argv[2])
-                    else:
-                        writer(codeline + '\n', sys.argv[2])
-                elif "-" in i:
-                    arrul.append(i)
-            if arrul != []:
-                codeline = representation(arrul, "-")
-                writer(codeline, sys.argv[2])
+            while i < len(data):
+                if '#' in data[i]:
+                    respr = respr + representation(data[i], '#')
+                    respr = respr + '\n'
+                elif '-' in data[i]:
+                    j = i
+                    while j < len(data) and '-' in data[j]:
+                        arrul.append(data[j])
+                        j += 1
+                    respr = respr + representation(arrul, '-')
+                    arrul = []
+                    if j != len(data) - 1:
+                        respr += '\n'
+                    i = j
+                i += 1
+            writer(respr, sys.argv[2])
         except FileNotFoundError:
             print('Missing {}'.format(sys.argv[1]), file=sys.stderr)
             exit(1)
