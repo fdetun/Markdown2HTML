@@ -14,11 +14,21 @@ def representation(strzero, tag):
     """repr function"""
     ul = "<ul>"
     if tag == '-':
+        ul = "<ul>"
         for i in strzero:
             a = i.split(" ")
             a = a[1:]
             ul = ul + '\n' + '<li>' + ' '.join(a) + '</li>'
         ul = ul + "\n</ul>"
+        return ul
+
+    if tag == '*':
+        ul = "<ol>"
+        for i in strzero:
+            a = i.split(" ")
+            a = a[1:]
+            ul = ul + '\n' + '<li>' + ' '.join(a) + '</li>'
+        ul = ul + "\n</ol>"
         return ul
 
     array = strzero.split(' ')
@@ -59,6 +69,16 @@ if __name__ == "__main__":
                         arrul.append(data[j])
                         j += 1
                     respr = respr + representation(arrul, '-')
+                    arrul = []
+                    if j != len(data) - 1:
+                        respr += '\n'
+                    i = j
+                elif '*' in data[i]:
+                    j = i
+                    while j < len(data) and '*' in data[j]:
+                        arrul.append(data[j])
+                        j += 1
+                    respr = respr + representation(arrul, '*')
                     arrul = []
                     if j != len(data) - 1:
                         respr += '\n'
